@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'controller.dart';
 
@@ -12,9 +13,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-
-
   final ProductController productController = Get.put(ProductController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,10 +39,19 @@ class _HomePageState extends State<HomePage> {
                       return Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          height: 200,
                           width: 100,
-                          color: Colors.red,
-                          child: Text(productController.productList[index].name,style: TextStyle(color: Colors.black),),
+                          child: Column(
+                            children: [
+                              CachedNetworkImage(
+                                  imageUrl: productController.productList[index].imageLink,
+                                height: 80,
+                              ),
+                              SizedBox(height: 5,),
+                              Text(productController.productList[index].name),
+                              SizedBox(height: 5,),
+                              Text(productController.productList[index].price),
+                            ],
+                          )
                         ),
                       );
                     }),
